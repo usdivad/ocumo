@@ -1,8 +1,8 @@
 const express = require("express");
-const ws = require("ws");
+const WebSocket = require("ws");
 
 const app = express();
-const wss = new ws.Server({"port": 1234});
+const wss = new WebSocket.Server({"port": 1234});
 
 
 var users = {};
@@ -13,9 +13,17 @@ app.get("/", function(req, res) {
     res.sendFile(__dirname + "/client/ws_client.html");
 });
 
+app.get("/performer", function(req, res) {
+    res.sendFile(__dirname + "/client/ws_performer.html");
+});
+
 // Src
 app.get("/ws_client.js", function(req, res) {
     res.sendFile(__dirname + "/client/ws_client.js");
+});
+
+app.get("/ws_performer.js", function(req, res) {
+    res.sendFile(__dirname + "/client/ws_performer.js");
 });
 
 app.get("/ws_client.css", function(req, res) {
@@ -52,13 +60,27 @@ wss.on("connection", function(ws) {
 
     ws.send(JSON.stringify({"userIdx": numUsers}));
 
-    numUsers++
+    numUsers++;
 
     ws.on("message", function(msg) {
         console.log("Received: %s", msg);
+        var data = JSON.parse(msg);
+
+        // Broadcast triggerSample event
+        if ("triggerSample" in data) {
+            wss.clients.forEach(function(client) {
+                if (client != ws && client.readyState == WebSocket.OPEN) {
+                    client.send(msg);
+                }
+            })
+        }
     });
 });
 
+
+// wss.on("message", function(message) {
+//     console.log
+// })
 
 
 // const wss = new ws.Server({port: 8000});

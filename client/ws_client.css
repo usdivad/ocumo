@@ -1,7 +1,15 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
 .div_btn {
     background-color: gray;
 }
 
-.div_btn:active {
+.div_btn:hover {
     background-color: white;
+}
+
+.div_btn:active {
+    background-color: purple;
 }

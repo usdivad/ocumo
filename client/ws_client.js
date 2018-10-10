@@ -2,12 +2,14 @@ window.onload = function() {
     var ws = new WebSocket("ws://localhost:1234");
     var numSamples = 7;
     var areSamplesLoaded = false;
+    var sampleIdx = -1;
     var samplePlayer;
+    var sampleMode = "sbpl"; // sdpl, sbpl
 
     ws.onopen = function() {
         console.log("ws connected");
 
-        ws.send("Connected!");
+        ws.send(JSON.stringify({"log": "Client connected!"}));
     }
 
     ws.onmessage = function(message) {
@@ -18,7 +20,7 @@ window.onload = function() {
         
         // Load samples
         if ("userIdx" in data) {
-            var sampleIdx = (data["userIdx"] % numSamples) + 1;
+            sampleIdx = (data["userIdx"] % numSamples) + 1;
             // var sampleName = "sbpl" + (sampleIdx+1);
             var sampleBasePath = "samples/mp3/";
             var sampleExt = ".mp3";
@@ -33,7 +35,17 @@ window.onload = function() {
 
         // Playback
         if ("triggerSample" in data && areSamplesLoaded) {
-            samplePlayer.get(data["triggerSample"]).restart();
+            if (data["triggerSample"] == sampleIdx || data["triggerSample"] == "all") {
+                samplePlayer.get(sampleMode).restart();
+
+                // Flip sample mode
+                if (sampleMode == "sbpl") {
+                    sampleMode = "sdpl";
+                }
+                else {
+                    sampleMode = "sbpl";
+                }
+            }
         }
     }
 };
