@@ -4,7 +4,7 @@ const WebSocket = require("ws");
 
 const PORT = process.env.PORT || 3000;
 const app = express();
-const httpServer = http.createServer(app)
+const httpServer = http.createServer(app); // We create a separate http server to pass into ws so we can listen to both http and ws on same port
 
 // const wss = new WebSocket.Server({"port": 1234});
 const wss = new WebSocket.Server({"server": httpServer});

@@ -49,4 +49,13 @@ window.onload = function() {
             }
         }
     }
+
+
+    document.getElementById("btn0").addEventListener("touchstart click", function() {
+        if (areSamplesLoaded) {
+            samplePlayer.get(sampleMode).start();
+            samplePlayer.get(sampleMode).stop();
+        }
+    });
+
 };
