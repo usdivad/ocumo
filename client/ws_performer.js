@@ -1,5 +1,7 @@
 window.onload = function() {
-    var ws = new WebSocket("ws://localhost:1234");
+    // var ws = new WebSocket("ws://localhost:1234");
+    var ws = new WebSocket(location.origin.replace(/^http/, "ws"));
+
     var numUsers = 0; // tODO
     var numSamples = 8;
 

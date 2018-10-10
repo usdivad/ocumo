@@ -1,12 +1,22 @@
 const express = require("express");
+const http = require("http");
 const WebSocket = require("ws");
 
+const PORT = process.env.PORT || 3000;
 const app = express();
-const wss = new WebSocket.Server({"port": 1234});
+const httpServer = http.createServer(app)
+
+// const wss = new WebSocket.Server({"port": 1234});
+const wss = new WebSocket.Server({"server": httpServer});
 
 
 var users = {};
 var numUsers = 0;
+
+// Server
+httpServer.listen(PORT, function() {
+    console.log("Listning on port " + PORT);
+});
 
 // Views
 app.get("/", function(req, res) {
@@ -45,9 +55,9 @@ app.get("/samples/:sampleFormat/:sampleName", function(req, res) {
 
 
 // WebSockets
-app.listen(3000, function() {
-    console.log("Listning on port 3000");
-});
+// app.listen(3000, function() {
+//     console.log("Listning on port 3000");
+// });
 
 
 
