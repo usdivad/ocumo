@@ -1,0 +1,7 @@
+.div_btn {
+    background-color: gray;
+}
+
+.div_btn:active {
+    background-color: white;
+}
