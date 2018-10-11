@@ -51,8 +51,9 @@ window.onload = function() {
     }
 
 
-    document.getElementById("btn0").addEventListener("touchend click", function() {
+    document.getElementById("btn0").addEventListener("touchend", function() {
         if (areSamplesLoaded) {
+            console.log("act");
             samplePlayer.get(sampleMode).start();
             samplePlayer.get(sampleMode).stop();
         }
