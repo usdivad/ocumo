@@ -37,7 +37,11 @@ window.onload = function() {
         // Playback
         if ("triggerSample" in data && areSamplesLoaded) {
             if (data["triggerSample"] == sampleIdx || data["triggerSample"] == "all") {
-                samplePlayer.get(sampleMode).restart();
+                // Quantize
+                var t = new Tone.Time(Tone.now()).quantize("8n");
+                
+                // Play sample
+                samplePlayer.get(sampleMode).restart(t);
 
                 // Flip sample mode
                 if (sampleMode == "sbpl") {
