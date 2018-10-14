@@ -108,6 +108,11 @@ wss.on("connection", function(ws) {
                 }
             });
         }
+
+        // Update current song for performer
+        if ("currSongName" in data) {
+            users[performerID].send(msg);
+        }
     });
 });
 

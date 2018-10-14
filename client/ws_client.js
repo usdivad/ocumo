@@ -18,6 +18,7 @@ window.onload = function() {
         console.log("ws connected");
 
         ws.send(JSON.stringify({"connect": "client"}));
+        ws.send(JSON.stringify({"currSongName": currSongName}));
     }
 
     ws.onmessage = function(message) {
@@ -90,6 +91,7 @@ window.onload = function() {
                 songIdx = (songIdx + 1) % songNames.length;
             }
             currSongName = songNames[songIdx];
+            ws.send(JSON.stringify({"currSongName": currSongName}));
         }
     }
 

@@ -16,6 +16,13 @@ window.onload = function() {
         ws.send(JSON.stringify({"connect": "performer"}));
     }
 
+    ws.onmessage = function(message) {
+        var data = JSON.parse(message.data);
+        if ("currSongName" in data) {
+            document.getElementById("currSongNameDiv").innerText = data["currSongName"];
+        }
+    }
+
     // Trigger samples
 
     // "all"
