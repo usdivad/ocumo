@@ -2,6 +2,9 @@
 // require("webmidi");
 
 var users = {};
+var font;
+var fontSize;
+var defaultDiameter = 100;
 
 function setup() {
     createCanvas(800, 600);
@@ -10,6 +13,10 @@ function setup() {
     //     addRandomUser();
     //     console.log(i);
     // }
+
+    textAlign(CENTER);
+
+    font = 
 
     document.getElementById("addRandomUserBtn").addEventListener("click", function(e) {
         addRandomUser();
@@ -31,16 +38,21 @@ function draw() {
 
 function User(id, x, y, color) {
     this.id = id;
-    this.diameter = 20;
+    this.diameter = defaultDiameter;
     this.x = x;
     this.y = y;
     this.color = color;
     this.show = function() {
         var diameter = this.diameter;
-        if ( (mouseX < this.x + this.diameter/2 && mouseX > this.x - this.diameter/2) &&
-            (mouseY < this.y + this.diameter/2 && mouseY > this.y - this.diameter/2)) {
+        var radius = diameter / 2;
+        var isMouseover = false
+
+        // Hover
+        if ( (mouseX < this.x + radius && mouseX > this.x - radius) &&
+            (mouseY < this.y + radius && mouseY > this.y - radius) ) {
             // console.log("mouse is within");
             diameter = this.diameter * 1.5;
+            isMouseover = true;
         }
 
         // if (this.x + mouseX > this.x + this.diameter/2) {
@@ -51,10 +63,40 @@ function User(id, x, y, color) {
 
         }
 
-        fill(this.color);
+        fill(this.color[0], this.color[1], this.color[2]);
         ellipse(this.x, this.y, diameter, diameter);
-        fill("black");
+        fill(255,255,255);
         text(this.id, this.x, this.y);
+
+        if (isMouseover) {
+            // Show options
+            var btnWidth = 10;
+            var btnHeight = 7;
+
+            // Load btn
+            fill(0, 0, 0);
+            if (mouseX < this.x + btnWidth && mouseX > this.x - btnWidth &&
+                mouseY < this.y - (radius*2/3) + btnHeight && mouseY < this.y + (radius*2/3) - btnHeight) {
+                fill(255-this.color[0], 255-this.color[1], 255-this.color[2]);
+            }
+            text("load", this.x, this.y - radius*2/3);
+
+            // Play btn
+            fill(0, 0, 0);
+            if (mouseX < this.x - (radius*2/3) + btnWidth && mouseX > this.x - (radius*2/3) - btnWidth &&
+                mouseY < this.y + (radius*2/3) + btnHeight && mouseY < this.y + (radius*2/3) - btnHeight) {
+                fill(255-this.color[0], 255-this.color[1], 255-this.color[2]);
+            }
+            text("play", this.x - radius*2/3, this.y + radius*2/3);
+
+            // Stop btn
+            fill(0, 0, 0);
+            if (mouseX < this.x + (radius*2/3) + btnWidth && mouseX > this.x + (radius*2/3) - btnWidth &&
+                mouseY < this.y + (radius*2/3) + btnHeight && mouseY < this.y + (radius*2/3) - btnHeight) {
+                fill(255-this.color[0], 255-this.color[1], 255-this.color[2]);
+            }
+            text("stop", this.x + radius*2/3, this.y + radius*2/3);
+        }
     }
 
     this.handleClick = function() {
@@ -68,7 +110,7 @@ function addUser(id, x, y, color) {
 }
 
 function addRandomUser() {
-    addUser(Date.now(), random(width), random(height), "white");
+    addUser(Date.now(), random(width-defaultDiameter), random(height-defaultDiameter), [random(255), random(255), random(255)]);
 }
 
 
