@@ -1,5 +1,7 @@
 body {
     font-family: Arial, sans-serif;
+    text-align: center;
+    font-size: 400%;
 }
 
 .div_btn {
@@ -12,4 +14,8 @@ body {
 
 .div_btn:active {
     background-color: purple;
+}
+
+a, a:hover, a:visited {
+    color: black;
 }
