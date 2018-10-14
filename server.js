@@ -24,9 +24,22 @@ app.get("/", function(req, res) {
     res.sendFile(__dirname + "/client/ws_client.html");
 });
 
+app.get("/client", function(req, res) {
+    res.sendFile(__dirname + "/client/ws_client.html");
+});
+
 app.get("/performer", function(req, res) {
     res.sendFile(__dirname + "/client/ws_performer.html");
 });
+
+app.get("/sighack_conductor", function(req, res) {
+    res.sendFile(__dirname + "/client/sighack_conductor.html");
+});
+
+app.get("/sighack_client", function(req, res) {
+    res.sendFile(__dirname + "/client/sighack_client.html");
+});
+
 
 // Src
 app.get("/ws_client.js", function(req, res) {
@@ -45,9 +58,31 @@ app.get("/ws_performer_bundle.js", function(req, res) {
     res.sendFile(__dirname + "/client/ws_performer_bundle.js");
 });
 
+app.get("/sighack_conductor.js", function(req, res) {
+    res.sendFile(__dirname + "/client/sighack_conductor.js");
+});
+
+app.get("/sighack_client.js", function(req, res) {
+    res.sendFile(__dirname + "/client/sighack_client.js");
+});
+
+app.get("/sighack_client.js", function(req, res) {
+    res.sendFile(__dirname + "/client/sighack_client.js");
+});
+
+// Style
 app.get("/ws_client.css", function(req, res) {
     res.sendFile(__dirname + "/client/ws_client.css");
 });
+
+app.get("/sighack_client.css", function(req, res) {
+    res.sendFile(__dirname + "/client/sighack_client.css");
+});
+
+app.get("/sighack_conductor.css", function(req, res) {
+    res.sendFile(__dirname + "/client/sighack_conductor.css");
+});
+
 
 // Lib
 app.get("/Tone.js", function(req, res) {
@@ -56,6 +91,10 @@ app.get("/Tone.js", function(req, res) {
 
 app.get("/webmidi.js", function(req, res) {
     res.sendFile(__dirname + "/lib/webmidi.min.js");
+});
+
+app.get("/p5.js", function(req, res) {
+    res.sendFile(__dirname + "/lib/p5.min.js");
 });
 
 
