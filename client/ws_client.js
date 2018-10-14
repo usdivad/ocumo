@@ -8,6 +8,7 @@ window.onload = function() {
     var sampleIdx = -1;
     var samplePlayer;
     var sampleMode = "sbpl"; // sdpl, sbpl
+    var btn0 = document.getElementById("btn0");
 
     ws.onopen = function() {
         console.log("ws connected");
@@ -33,6 +34,8 @@ window.onload = function() {
             }, function() {
                 console.log("Done loading samples!");
                 areSamplesLoaded = true;
+
+                btn0.innerHTML = "<br/>done loading samples! touch me to activate sound<br/><br/>"
             }).toMaster();
         }
 
@@ -62,13 +65,18 @@ window.onload = function() {
         ws.send(JSON.stringify({"ping": "Stayin' alive"}));
     }, 30000);
 
-
-    document.getElementById("btn0").addEventListener("touchend", function() {
+    var activateSound = function() {
         if (areSamplesLoaded) {
             console.log("act");
             samplePlayer.get(sampleMode).start();
             samplePlayer.get(sampleMode).stop();
+
+            btn0.innerHTML = "<br/>sound activated :)<br/><br/>"
         }
-    });
+    };
+
+
+    btn0.addEventListener("touchend", activateSound);
+    btn0.addEventListener("mouseup", activateSound);
 
 };
