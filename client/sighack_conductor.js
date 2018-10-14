@@ -5,6 +5,15 @@ var users = {};
 
 function setup() {
     createCanvas(800, 600);
+
+    // for (var i=0; i<5; i++) {
+    //     addRandomUser();
+    //     console.log(i);
+    // }
+
+    document.getElementById("addRandomUserBtn").addEventListener("click", function(e) {
+        addRandomUser();
+    });
 }
 
 function draw() {
@@ -13,7 +22,10 @@ function draw() {
     // ellipse(50, 50, 80, 80);
 
     for (var id in users) {
-        users[id].show();
+        var user = users[id];
+
+        // Display the user
+        user.show();
     }
 }
 
@@ -24,7 +36,29 @@ function User(id, x, y, color) {
     this.y = y;
     this.color = color;
     this.show = function() {
-        ellipse(this.x, this.y, this.diameter, this.diameter);
+        var diameter = this.diameter;
+        if ( (mouseX < this.x + this.diameter/2 && mouseX > this.x - this.diameter/2) &&
+            (mouseY < this.y + this.diameter/2 && mouseY > this.y - this.diameter/2)) {
+            // console.log("mouse is within");
+            diameter = this.diameter * 1.5;
+        }
+
+        // if (this.x + mouseX > this.x + this.diameter/2) {
+        //     console.log("mouse is within");
+        //     diameter = this.diameter * 1.5;
+        // }
+        else {
+
+        }
+
+        fill(this.color);
+        ellipse(this.x, this.y, diameter, diameter);
+        fill("black");
+        text(this.id, this.x, this.y);
+    }
+
+    this.handleClick = function() {
+        console.log("click");
     }
 }
 
