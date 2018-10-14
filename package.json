@@ -2,6 +2,7 @@
     "dependencies": {
         "express": "^4.16.3",
         "http": "0.0.0",
+        "webmidi": "^2.2.0",
         "ws": "^6.1.0"
     }
 }
