@@ -6,7 +6,7 @@ window.onload = function() {
     var ws = new WebSocket(location.origin.replace(/^http/, "ws"));
 
     var numUsers = 0; // tODO
-    var numSamples = 8;
+    var numSamples = 6; // for SPD
 
     var midiInput;
 
@@ -34,6 +34,24 @@ window.onload = function() {
     var handleMIDINoteOn = function(e) {
         // console.log(e);
         console.log(e.note.number + "(" + e.note.name + e.note.octave + ")");
+
+        // Hard-coded for SPD setup, MIDI notes 60-68
+        if (e.note.number == 60) {
+            // Go to prev song
+            // TODO
+        }
+        else if (e.note.number == 61) {
+            // Trigger all samples
+            ws.send(JSON.stringify({"triggerSample": "all"}));
+        }
+        else if (e.note.number == 62) {
+            // Go to next song
+            // TODO
+        }
+        else if (e.note.number >= 63 && e.note.number <= 68) {
+            // Trigger individual sample
+            ws.send(JSON.stringify({"triggerSample": e.note.number - 62})); // To get 1-6
+        }
     };
 
     WebMidi.enable(function (err) {
