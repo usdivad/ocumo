@@ -74,4 +74,11 @@ window.onload = function() {
         }
 
     });
+
+
+    // Stayin' alive
+    window.setInterval(function() {
+        ws.send(JSON.stringify({"ping": "Stayin' alive"}));
+    }, 30000);
+
 };
