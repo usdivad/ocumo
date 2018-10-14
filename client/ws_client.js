@@ -12,6 +12,7 @@ window.onload = function() {
     var shouldQuantize = false;
     var songIdx = 0;
     var songNames = ["sdpl", "sbpl", "begood"];
+    var currTriggerTimeout = -1;
 
     ws.onopen = function() {
         console.log("ws connected");
@@ -62,6 +63,13 @@ window.onload = function() {
                 // else if (currSongName == "sdpl") {
                 //     currSongName = "sbpl";
                 // }
+
+                // Visuals
+                clearTimeout(currTriggerTimeout);
+                document.getElementById("greeting").style.backgroundColor = "purple";
+                currTriggerTimeout = setTimeout(function() {
+                    document.getElementById("greeting").style.backgroundColor = "white";
+                }, 100);
             }
         }
 
