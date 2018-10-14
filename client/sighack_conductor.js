@@ -5,7 +5,8 @@ var users = {};
 var font;
 var fontSize;
 var defaultDiameter = 100;
-var wasMouseAlreadyPressed = false; 
+var wasMouseAlreadyPressed = false;
+var defaultSamples = ["short_sample_1_01.wav", "short_sample_1_02.wav"];
 
 function setup() {
     createCanvas(800, 600);
@@ -21,6 +22,46 @@ function setup() {
 
     document.getElementById("addRandomUserBtn").addEventListener("click", function(e) {
         addRandomUser();
+    });
+
+    document.getElementById("loadAllBtn").addEventListener("click", function(e) {
+        var sampleName = document.getElementById("sampleName").value;
+        var scheduleTime = document.getElementById("scheduleTime").value;
+
+        for (var id in users) {
+            loadSample(id, sampleName);
+        }
+    });
+
+    document.getElementById("playAllBtn").addEventListener("click", function(e) {
+        var sampleName = document.getElementById("sampleName").value;
+        var scheduleTime = document.getElementById("scheduleTime").value;
+
+        for (var id in users) {
+            playSample(id, sampleName, scheduleTime);
+        }
+    });
+
+    document.getElementById("stopAllBtn").addEventListener("click", function(e) {
+        var sampleName = document.getElementById("sampleName").value;
+        var scheduleTime = document.getElementById("scheduleTime").value;
+
+        for (var id in users) {
+            stopAll(id, scheduleTime);
+        }
+    });
+
+    document.getElementById("loadDefaultSamplesForAllBtn").addEventListener("click", function(e) {
+        // var sampleName = document.getElementById("sampleName").value;
+        var scheduleTime = document.getElementById("scheduleTime").value;
+
+        for (var i=0; i<defaultSamples.length; i++) {
+            var sampleName = defaultSamples[i];
+            
+            for (var id in users) {
+                loadSample(id, sampleName);
+            }
+        }
     });
 }
 
@@ -149,6 +190,7 @@ function User(id, x, y, color) {
     }
 }
 
+// Adding users
 function addUser(id, x, y, color) {
     var user = new User(id, x, y, color);
     users[id] = user;
@@ -158,8 +200,18 @@ function addRandomUser() {
     addUser(Date.now(), random(width-defaultDiameter), random(height-defaultDiameter), [random(255), random(255), random(255)]);
 }
 
+// Updating users
+function updateUserPosition(id, x, y) {
+    users[id].x = x;
+    users[id].y = y;
+}
+
+function updateUserColor(id, color) {
+    users[id].color = color;
+}
 
 
+// Samples
 function loadSample(userID, sampleName) {
     console.log(userID + ": loading sample " + sampleName);
 }
