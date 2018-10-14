@@ -14,6 +14,10 @@ window.onload = function() {
     var songNames = ["sdpl", "sbpl", "ns", "begood", "alma", "bachrooma", "bachroomb"];
     var currTriggerTimeout = -1;
 
+
+    numSamples = 21;
+    songNames = ["short_sample_2_00-", "short_sample_1_"];
+
     ws.onopen = function() {
         console.log("ws connected");
 
@@ -34,13 +38,15 @@ window.onload = function() {
             var sampleBasePath = "samples/mp3/";
             var sampleExt = ".mp3";
             samplePlayer = new Tone.Players({
-                "sdpl": sampleBasePath + "saron_sdpl" + sampleIdx + sampleExt,
-                "sbpl": sampleBasePath + "saron_sbpl" + sampleIdx + sampleExt,
-                "begood": sampleBasePath + "begood" + sampleIdx + sampleExt,
-                "alma": sampleBasePath + "alma" + sampleIdx + sampleExt,
-                "ns": sampleBasePath + "ns" + sampleIdx + sampleExt,
-                "bachrooma": sampleBasePath + "bachrooma" + sampleIdx + sampleExt,
-                "bachroomb": sampleBasePath + "bachroomb" + sampleIdx + sampleExt
+                // "sdpl": sampleBasePath + "saron_sdpl" + sampleIdx + sampleExt,
+                // "sbpl": sampleBasePath + "saron_sbpl" + sampleIdx + sampleExt,
+                // "begood": sampleBasePath + "begood" + sampleIdx + sampleExt,
+                // "alma": sampleBasePath + "alma" + sampleIdx + sampleExt,
+                // "ns": sampleBasePath + "ns" + sampleIdx + sampleExt,
+                // "bachrooma": sampleBasePath + "bachrooma" + sampleIdx + sampleExt,
+                // "bachroomb": sampleBasePath + "bachroomb" + sampleIdx + sampleExt
+                "short_sample_2_00-": sampleBasePath + "short_sample_2_00-" + sampleIdx + sampleExt,
+                "short_sample_1_": sampleBasePath + "short_sample_1_" + sampleIdx + sampleExt
             }, function() {
                 console.log("Done loading samples!");
                 areSamplesLoaded = true;
