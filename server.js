@@ -73,7 +73,8 @@ wss.on("connection", function(ws) {
     numUsers++;
 
     ws.on("message", function(msg) {
-        console.log("Received: %s", msg);
+        var wsID = userID;
+        console.log("Received: %s from %s", msg, wsID);
         var data = JSON.parse(msg);
 
         // Broadcast triggerSample event

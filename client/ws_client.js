@@ -55,6 +55,12 @@ window.onload = function() {
     }
 
 
+    // Stayin' alive
+    window.setInterval(function() {
+        ws.send(JSON.stringify({"ping": "Stayin' alive"}));
+    }, 30000);
+
+
     document.getElementById("btn0").addEventListener("touchend", function() {
         if (areSamplesLoaded) {
             console.log("act");
