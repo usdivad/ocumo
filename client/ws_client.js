@@ -7,10 +7,11 @@ window.onload = function() {
     var areSamplesLoaded = false;
     var sampleIdx = -1;
     var samplePlayer;
-    var sampleMode = "begood"; // sdpl, sbpl, begood
+    var currSongName = "begood"; // fka sampleMode
     var btn0 = document.getElementById("btn0");
     var shouldQuantize = false;
-    // var songName = "begood"; // saron, begood
+    var songIdx = 0;
+    var songNames = ["sdpl", "sbpl", "begood"];
 
     ws.onopen = function() {
         console.log("ws connected");
@@ -52,16 +53,31 @@ window.onload = function() {
                 }
                 
                 // Play sample
-                samplePlayer.get(sampleMode).restart(t);
+                samplePlayer.get(currSongName).restart(t);
 
                 // Flip sample mode
-                if (sampleMode == "sbpl") {
-                    sampleMode = "sdpl";
-                }
-                else if (sampleMode == "sdpl") {
-                    sampleMode = "sbpl";
+                // if (currSongName == "sbpl") {
+                //     currSongName = "sdpl";
+                // }
+                // else if (currSongName == "sdpl") {
+                //     currSongName = "sbpl";
+                // }
+            }
+        }
+
+        // Go to song
+        if ("goToSong" in data) {
+            console.log(data);
+            if (data["goToSong"] == "prev") {
+                songIdx = (songIdx - 1) % songNames.length;
+                if (songIdx < 0) {
+                    songIdx = songNames.length - 1;
                 }
             }
+            else if (data["goToSong"] == "next") {
+                songIdx = (songIdx + 1) % songNames.length;
+            }
+            currSongName = songNames[songIdx];
         }
     }
 
@@ -74,8 +90,8 @@ window.onload = function() {
     var activateSound = function() {
         if (areSamplesLoaded) {
             console.log("act");
-            samplePlayer.get(sampleMode).start();
-            samplePlayer.get(sampleMode).stop();
+            samplePlayer.get(currSongName).start();
+            samplePlayer.get(currSongName).stop();
 
             btn0.innerHTML = "<br/>sound activated :)<br/><br/>"
         }

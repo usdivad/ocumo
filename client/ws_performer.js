@@ -38,7 +38,7 @@ window.onload = function() {
         // Hard-coded for SPD setup, MIDI notes 60-68
         if (e.note.number == 60) {
             // Go to prev song
-            // TODO
+            ws.send(JSON.stringify({"goToSong": "prev"}));
         }
         else if (e.note.number == 61) {
             // Trigger all samples
@@ -46,7 +46,7 @@ window.onload = function() {
         }
         else if (e.note.number == 62) {
             // Go to next song
-            // TODO
+            ws.send(JSON.stringify({"goToSong": "next"}));
         }
         else if (e.note.number >= 63 && e.note.number <= 68) {
             // Trigger individual sample

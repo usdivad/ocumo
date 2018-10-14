@@ -101,12 +101,12 @@ wss.on("connection", function(ws) {
         }
 
         // Broadcast triggerSample event
-        if ("triggerSample" in data) {
+        if ("triggerSample" in data || "goToSong" in data) {
             wss.clients.forEach(function(client) {
                 if (client != ws && client.readyState == WebSocket.OPEN) {
                     client.send(msg);
                 }
-            })
+            });
         }
     });
 });
