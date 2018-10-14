@@ -36,6 +36,14 @@ app.get("/ws_performer.js", function(req, res) {
     res.sendFile(__dirname + "/client/ws_performer.js");
 });
 
+app.get("/ws_client_bundle.js", function(req, res) {
+    res.sendFile(__dirname + "/client/ws_client_bundle.js");
+});
+
+app.get("/ws_performer_bundle.js", function(req, res) {
+    res.sendFile(__dirname + "/client/ws_performer_bundle.js");
+});
+
 app.get("/ws_client.css", function(req, res) {
     res.sendFile(__dirname + "/client/ws_client.css");
 });
@@ -43,6 +51,10 @@ app.get("/ws_client.css", function(req, res) {
 // Lib
 app.get("/Tone.js", function(req, res) {
     res.sendFile(__dirname + "/lib/Tone.min.js");
+});
+
+app.get("/webmidi.js", function(req, res) {
+    res.sendFile(__dirname + "/lib/webmidi.min.js");
 });
 
 
