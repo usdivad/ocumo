@@ -7,11 +7,11 @@ window.onload = function() {
     var areSamplesLoaded = false;
     var sampleIdx = -1;
     var samplePlayer;
-    var currSongName = "begood"; // fka sampleMode
+    var currSongName = "sdpl"; // fka sampleMode
     var btn0 = document.getElementById("btn0");
     var shouldQuantize = false;
     var songIdx = 0;
-    var songNames = ["sdpl", "sbpl", "begood"];
+    var songNames = ["sdpl", "sbpl", "ns", "begood", "alma", "bachrooma", "bachroomb"];
     var currTriggerTimeout = -1;
 
     ws.onopen = function() {
@@ -35,7 +35,11 @@ window.onload = function() {
             samplePlayer = new Tone.Players({
                 "sdpl": sampleBasePath + "saron_sdpl" + sampleIdx + sampleExt,
                 "sbpl": sampleBasePath + "saron_sbpl" + sampleIdx + sampleExt,
-                "begood": sampleBasePath + "begood" + sampleIdx + sampleExt
+                "begood": sampleBasePath + "begood" + sampleIdx + sampleExt,
+                "alma": sampleBasePath + "alma" + sampleIdx + sampleExt,
+                "ns": sampleBasePath + "ns" + sampleIdx + sampleExt,
+                "bachrooma": sampleBasePath + "bachrooma" + sampleIdx + sampleExt,
+                "bachroomb": sampleBasePath + "bachroomb" + sampleIdx + sampleExt
             }, function() {
                 console.log("Done loading samples!");
                 areSamplesLoaded = true;
