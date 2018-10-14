@@ -13,7 +13,7 @@ window.onload = function() {
     ws.onopen = function() {
         console.log("ws connected");
 
-        ws.send(JSON.stringify({"log": "Performer connected!"}));
+        ws.send(JSON.stringify({"connect": "performer"}));
     }
 
     // Trigger samples

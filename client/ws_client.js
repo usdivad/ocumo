@@ -14,7 +14,7 @@ window.onload = function() {
     ws.onopen = function() {
         console.log("ws connected");
 
-        ws.send(JSON.stringify({"log": "Client connected!"}));
+        ws.send(JSON.stringify({"connect": "client"}));
     }
 
     ws.onmessage = function(message) {

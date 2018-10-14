@@ -12,6 +12,7 @@ const wss = new WebSocket.Server({"server": httpServer});
 
 var users = {};
 var numUsers = 0;
+var performerID;
 
 // Server
 httpServer.listen(PORT, function() {
@@ -75,19 +76,29 @@ app.get("/samples/:sampleFormat/:sampleName", function(req, res) {
 
 
 wss.on("connection", function(ws) {
+    // User ID business
     var userID = Date.now();
     console.log("User %s connected!", userID);
-
     users[userID] = ws;
 
-    ws.send(JSON.stringify({"userIdx": numUsers}));
-
-    numUsers++;
-
+    // Receive message
     ws.on("message", function(msg) {
         var wsID = userID;
         console.log("Received: %s from %s", msg, wsID);
         var data = JSON.parse(msg);
+
+        // Add user
+        if ("connect" in data) {
+            var userType = data["connect"];
+            if (userType == "client") {
+                ws.send(JSON.stringify({"userIdx": numUsers}));
+                numUsers++;
+            }
+            else if (userType == "performer") {
+                performerID = wsID;
+                console.log("performerID = " + performerID);
+            }
+        }
 
         // Broadcast triggerSample event
         if ("triggerSample" in data) {
