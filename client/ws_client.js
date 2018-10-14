@@ -3,13 +3,14 @@
 window.onload = function() {
     // var ws = new WebSocket("ws://localhost:1234");
     var ws = new WebSocket(location.origin.replace(/^http/, "ws"));
-    var numSamples = 7;
+    var numSamples = 6;
     var areSamplesLoaded = false;
     var sampleIdx = -1;
     var samplePlayer;
-    var sampleMode = "sbpl"; // sdpl, sbpl
+    var sampleMode = "begood"; // sdpl, sbpl, begood
     var btn0 = document.getElementById("btn0");
     var shouldQuantize = false;
+    // var songName = "begood"; // saron, begood
 
     ws.onopen = function() {
         console.log("ws connected");
@@ -31,7 +32,8 @@ window.onload = function() {
             var sampleExt = ".mp3";
             samplePlayer = new Tone.Players({
                 "sdpl": sampleBasePath + "saron_sdpl" + sampleIdx + sampleExt,
-                "sbpl": sampleBasePath + "saron_sbpl" + sampleIdx + sampleExt
+                "sbpl": sampleBasePath + "saron_sbpl" + sampleIdx + sampleExt,
+                "begood": sampleBasePath + "begood" + sampleIdx + sampleExt
             }, function() {
                 console.log("Done loading samples!");
                 areSamplesLoaded = true;
@@ -56,7 +58,7 @@ window.onload = function() {
                 if (sampleMode == "sbpl") {
                     sampleMode = "sdpl";
                 }
-                else {
+                else if (sampleMode == "sdpl") {
                     sampleMode = "sbpl";
                 }
             }
