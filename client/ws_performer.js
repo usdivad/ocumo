@@ -9,6 +9,7 @@ window.onload = function() {
     var numSamples = 6; // for SPD
 
     var midiInput;
+    var shouldTriggerSamples = true;
 
     ws.onopen = function() {
         console.log("ws connected");
@@ -48,8 +49,17 @@ window.onload = function() {
             ws.send(JSON.stringify({"goToSong": "prev"}));
         }
         else if (e.note.number == 61) {
-            // Trigger all samples
-            ws.send(JSON.stringify({"triggerSample": "all"}));
+            // // Trigger all samples
+            // ws.send(JSON.stringify({"triggerSample": "all"}));
+
+            // Toggle shouldTriggerSamples
+            shouldTriggerSamples = !shouldTriggerSamples;
+            if (shouldTriggerSamples) {
+                document.getElementById("shouldTriggerSamplesDiv").innerText = "shouldTriggerSamples = true";
+            }
+            else {
+                document.getElementById("shouldTriggerSamplesDiv").innerText = "shouldTriggerSamples = false";
+            }
         }
         else if (e.note.number == 62) {
             // Go to next song
@@ -57,7 +67,9 @@ window.onload = function() {
         }
         else if (e.note.number >= 63 && e.note.number <= 68) {
             // Trigger individual sample
-            ws.send(JSON.stringify({"triggerSample": e.note.number - 62})); // To get 1-6
+            if (shouldTriggerSamples) {
+                ws.send(JSON.stringify({"triggerSample": e.note.number - 62})); // To get 1-6
+            }
         }
     };
 
