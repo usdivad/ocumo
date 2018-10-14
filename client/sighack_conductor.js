@@ -5,6 +5,7 @@ var users = {};
 var font;
 var fontSize;
 var defaultDiameter = 100;
+var wasMouseAlreadyPressed = false; 
 
 function setup() {
     createCanvas(800, 600);
@@ -16,7 +17,7 @@ function setup() {
 
     textAlign(CENTER);
 
-    font = 
+    // font = 
 
     document.getElementById("addRandomUserBtn").addEventListener("click", function(e) {
         addRandomUser();
@@ -45,14 +46,14 @@ function User(id, x, y, color) {
     this.show = function() {
         var diameter = this.diameter;
         var radius = diameter / 2;
-        var isMouseover = false
+        var isMouseoverUser = false;
 
         // Hover
         if ( (mouseX < this.x + radius && mouseX > this.x - radius) &&
             (mouseY < this.y + radius && mouseY > this.y - radius) ) {
             // console.log("mouse is within");
             diameter = this.diameter * 1.5;
-            isMouseover = true;
+            isMouseoverUser = true;
         }
 
         // if (this.x + mouseX > this.x + this.diameter/2) {
@@ -68,7 +69,12 @@ function User(id, x, y, color) {
         fill(255,255,255);
         text(this.id, this.x, this.y);
 
-        if (isMouseover) {
+        if (isMouseoverUser) {
+            // Flags
+            var isMouseoverLoadBtn = false;
+            var isMouseoverPlayBtn = false;
+            var isMouseoverStopBtn = false;
+
             // Show options
             var btnWidth = 10;
             var btnHeight = 7;
@@ -78,24 +84,63 @@ function User(id, x, y, color) {
             if (mouseX < this.x + btnWidth && mouseX > this.x - btnWidth &&
                 mouseY < this.y - (radius*2/3) + btnHeight && mouseY < this.y + (radius*2/3) - btnHeight) {
                 fill(255-this.color[0], 255-this.color[1], 255-this.color[2]);
+                isMouseoverLoadBtn = true;
             }
             text("load", this.x, this.y - radius*2/3);
+            
 
             // Play btn
             fill(0, 0, 0);
             if (mouseX < this.x - (radius*2/3) + btnWidth && mouseX > this.x - (radius*2/3) - btnWidth &&
                 mouseY < this.y + (radius*2/3) + btnHeight && mouseY < this.y + (radius*2/3) - btnHeight) {
                 fill(255-this.color[0], 255-this.color[1], 255-this.color[2]);
+                isMouseoverPlayBtn = true;
             }
             text("play", this.x - radius*2/3, this.y + radius*2/3);
+            
 
             // Stop btn
             fill(0, 0, 0);
             if (mouseX < this.x + (radius*2/3) + btnWidth && mouseX > this.x + (radius*2/3) - btnWidth &&
                 mouseY < this.y + (radius*2/3) + btnHeight && mouseY < this.y + (radius*2/3) - btnHeight) {
                 fill(255-this.color[0], 255-this.color[1], 255-this.color[2]);
+                isMouseoverStopBtn = true;
             }
             text("stop", this.x + radius*2/3, this.y + radius*2/3);
+            
+
+
+
+            // Click!
+            if (mouseIsPressed) {
+                if (wasMouseAlreadyPressed) {
+                    return;
+                }
+
+                var sampleName = document.getElementById("sampleName").value;
+                var scheduleTime = document.getElementById("scheduleTime").value;
+
+                if (isMouseoverLoadBtn) {
+                    loadSample(this.id, sampleName);
+                }
+                else if (isMouseoverPlayBtn) {
+                    playSample(this.id, sampleName, scheduleTime);
+                }
+                else if (isMouseoverStopBtn) {
+                    stopAll(this.id, scheduleTime);
+                }
+
+                // Flash
+                if (isMouseoverLoadBtn || isMouseoverPlayBtn || isMouseoverStopBtn) {
+                    fill(255, 255, 255);
+                    rect(0, 0, width, height);
+                }
+
+                wasMouseAlreadyPressed = true;
+            }
+            else {
+                wasMouseAlreadyPressed = false;
+            }
         }
     }
 
@@ -113,6 +158,23 @@ function addRandomUser() {
     addUser(Date.now(), random(width-defaultDiameter), random(height-defaultDiameter), [random(255), random(255), random(255)]);
 }
 
+
+
+function loadSample(userID, sampleName) {
+    console.log(userID + ": loading sample " + sampleName);
+}
+
+function playSample(userID, sampleName, scheduleTime) {
+    console.log(userID + ": playing sample " + sampleName + " at time " + scheduleTime);
+}
+
+function stopAll(userID, scheduleTime) {
+    console.log(userID + ": stopping all samples at time " + scheduleTime);
+}
+
+
+// ================================================================
+// OLD STUFF
 
 window.onload = function() {
     // var ws = new WebSocket("ws://localhost:1234");
