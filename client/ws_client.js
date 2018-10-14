@@ -9,6 +9,7 @@ window.onload = function() {
     var samplePlayer;
     var sampleMode = "sbpl"; // sdpl, sbpl
     var btn0 = document.getElementById("btn0");
+    var shouldQuantize = false;
 
     ws.onopen = function() {
         console.log("ws connected");
@@ -43,7 +44,10 @@ window.onload = function() {
         if ("triggerSample" in data && areSamplesLoaded) {
             if (data["triggerSample"] == sampleIdx || data["triggerSample"] == "all") {
                 // Quantize
-                var t = new Tone.Time(Tone.now()).quantize("8n");
+                var t = new Tone.Time(Tone.now());
+                if (shouldQuantize) {
+                    t = t.quantize("16n");
+                }
                 
                 // Play sample
                 samplePlayer.get(sampleMode).restart(t);
