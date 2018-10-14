@@ -1,3 +1,6 @@
+// require("tone");
+// require("webmidi");
+
 window.onload = function() {
     // var ws = new WebSocket("ws://localhost:1234");
     var ws = new WebSocket(location.origin.replace(/^http/, "ws"));
